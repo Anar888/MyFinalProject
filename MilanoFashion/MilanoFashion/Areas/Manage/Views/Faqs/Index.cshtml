@@ -1,0 +1,71 @@
+﻿
+@model PagenatedList<Faqs>
+@{
+    ViewData["Title"] = "Index";
+    int counter = (Model.PageIndex - 1) * Model.PageSize;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 d-flex justify-content-between mt-5">
+            <h3>Colors</h3>
+
+            <a asp-action="create" style="margin-bottom: 28px;" class="btn btn-primary">Create</a>
+        </div>
+        <div class="col-lg-12">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">AccTitle</th>
+                        <th scope="col">AccDesc</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        counter++;
+                        <tr>
+                            <th scope="row">@counter</th>
+                            <td>@item.AccTitle</td>
+                            <td>@item.AccDesc</td>
+
+
+                            <td>
+                                <a asp-action="edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                            </td>
+                            <td>
+                                <a asp-action="delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if (Model.PageIndex > 1)
+                    {
+                        <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="1">@("<<")</a></li>
+                        <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(Model.PageIndex-1)">@("<")</a></li>
+                    }
+
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@i">@i</a></li>
+                    }
+
+                    @if (Model.PageIndex < Model.TotalPages)
+                    {
+                        <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@(Model.PageIndex+1)">></a></li>
+                        <li class="page-item"><a class="page-link" asp-action="index" asp-route-page="@Model.TotalPages">>></a></li>
+                    }
+
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</div>

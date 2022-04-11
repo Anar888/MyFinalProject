@@ -1,0 +1,24 @@
+﻿@model MemberLoginViewModel
+<main>
+
+
+    <div class="login-page">
+        <div style="text-align: center;" class="title-loginregister mb-5">
+            <h3>Login</h3>
+        </div>
+        <div class="form">
+          
+            <form class="login-form" asp-action="login" method="post">
+                <input asp-for="UserName" placeholder="UserName" required />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+                <input asp-for="Password" placeholder="Enter your Password" required />
+                <span asp-validation-for="Password" class="text-danger"></span>
+                <button>login</button>
+                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                <a asp-action="forgotpassword" style="color:red" class="forget-pwd ">Forget Password?</a>
+                <p class="message">Not registered? <a asp-action="register">Create an account</a></p>
+            </form>
+        </div>
+    </div>
+
+</main>

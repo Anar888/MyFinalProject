@@ -1,0 +1,583 @@
+﻿@using MilanoFashion.Services
+@using Microsoft.AspNetCore.Identity;
+@inject LayoutService layoutService
+@inject UserManager<AppUser> usermanager;
+@{ var settings = layoutService.GetSettings();
+    var categories = layoutService.GetCategories();
+    var brands = layoutService.GetBrands();
+    var basket = layoutService.GetBasket();
+    AppUser member = null;
+
+    if (User.Identity.IsAuthenticated)
+        member = usermanager.Users.FirstOrDefault(x => x.UserName == User.Identity.Name && !x.IsAdmin);
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <link rel="stylesheet" href="~/assets/css/shop.css">
+    <link rel="stylesheet" href="~/assets/css/about.css">
+    <link rel="stylesheet" href="~/assets/css/faqs.css">
+    <link rel="stylesheet" href="~/assets/css/blog.css">
+    <link rel="stylesheet" href="~/assets/css/detail.css">
+    <link rel="stylesheet" href="~/assets/css/login-register.css">
+    <link rel="stylesheet" href="~/assets/css/contact.css">
+    <link rel="stylesheet" href="~/assets/css/error.css">
+    <link rel="stylesheet" href="~/assets/css/myaccount.css">
+    <link rel="stylesheet" href="~/assets/css/checkout.css">
+    <link rel="stylesheet" href="~/assets/css/cart.css">
+</head>
+
+<body>
+    <header>
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="headitems mt-5">
+                        <div class="col-lg-5">
+                            <div class="search-section">
+                                <div class="container">
+                                    <div class="search-section"
+                                         style="position:relative">
+
+                                        <div class="search-box">
+                                            <form>
+                                                <input type="text" id="input-search" class="search-input" placeholder="Search..">
+
+                                                <button class="search-button">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <i class="fas fa-times d-none" style="position:absolute;top:10px;right:191px;cursor:pointer"></i>
+                                        <div class="row" id="searchList" style="position:absolute;top:50px;background-color:white;z-index:1000;width:400px"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="headericonsection" style="padding-left: 46px;">
+                                <a>
+                                    <img src="~/uploads/settings/@settings["headerlogo"]"
+                                         class="headericon" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+
+
+
+                            <div class="account-content">
+
+                                <div class="dropdwn">
+                                    @if (member != null)
+                                    {
+                                        <button class="dropbtn">My Profile</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="dropbtn">Log In or Register</button>
+                                    }
+
+                                    <div class="dropdwn-content">
+                                        @if (member != null)
+                                        {
+                                            <a>@member.FullName</a>
+                                            <a asp-controller="account" asp-action="profile">My Profile</a>
+                                            <a asp-controller="shop" asp-action="cart">Cart</a>
+                                            <a asp-action="logout" asp-controller="account">Logout</a>
+
+                                        }
+                                        else
+                                        {
+                                            <a asp-controller="account" asp-action="login">Log In</a>
+                                            <a asp-action="register" asp-controller="account">Register</a>
+                                        }
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            @*<div class="basketsection">
+                                    <a data-toggle="modal" data-target="#cartModal" class="basket-button ">
+                                        <span class="basket-button-text">
+                                            <span class="price-amount">
+                                                <bdi>
+                                                    <span class="woocommerce-Price-currencySymbol">$</span>@basket.TotalPrice.ToString("0.00")
+                                                </bdi>
+                                            </span>
+                                        </span>
+                                        <span class="basket-button-icon">
+                                            <i class="fas fa-shopping-basket"></i>
+                                        </span>
+                                    </a>
+
+                                </div>*@
+
+
+
+                            <div class="dropdown show basket-model basketsection">
+
+
+                                <a style=" color: #ff5555 !important; " asp-action="wishlist" asp-controller="shop">
+                                    <i class="far fa-heart"></i>
+                                </a>
+
+                                <a style=" color: #ff5555 !important; " role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                                    <sup>@basket.Products.Count</sup>
+                                </a>
+
+                                <div class="dropdown-menu " id="drpmenu" aria-labelledby="dropdownMenuLink">
+                                    <div class="modal-content">
+                                        <div class="modal-header border-bottom-0">
+                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                Your Shopping Cart
+                                            </h5>
+
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class="table table-image">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col"></th>
+                                                        <th scope="col">Product</th>
+                                                        <th scope="col">Price</th>
+                                                        <th scope="col">Count</th>
+                                                        <th scope="col">Total</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in basket.Products)
+                                                    {
+                                                        <tr>
+                                                            <td class="w-25">
+                                                                <img src="~/uploads/products/@item.Product.ProductImages.FirstOrDefault(x=>x.PosterStatus==true)?.Image" class="img-fluid img-thumbnail" alt="Sheep">
+                                                            </td>
+                                                            <td>@item.Product.Name</td>
+                                                            <td>@((item.Product.DiscountPercent>0?(item.Product.SalePrice*(1-item.Product.DiscountPercent/100)):item.Product.SalePrice).ToString("0.00"))</td>
+                                                            <td class="qty"><input type="text" class="form-control" id="input1" value="@item.Count"></td>
+                                                            <td>@((((item.Product.DiscountPercent > 0 ? (item.Product.SalePrice * (1 - item.Product.DiscountPercent / 100)) : item.Product.SalePrice)) * @item.Count).ToString("0.00"))</td>
+
+                                                            <td>
+                                                                <a asp-action="removebasket" asp-controller="shop" asp-route-id="@item.Product.Id" class="btn btn-danger btn-sm remove-to-cart">
+                                                                    <i class="fa fa-times"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                            <div class="d-flex justify-content-end">
+                                                <h5>Total: <span class="price text-success">@basket.TotalPrice.ToString("0.00")</span></h5>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer border-top-0 d-flex justify-content-between cart-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-success"><a style="color:white" asp-action="checkout" asp-controller="order">Checkout</a></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <nav style="padding: 0 300px;" class="navbar navbar-expand-lg navbar-light ">
+                        <div class="container-fluid">
+
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                                    aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarNav">
+                                <ul class="navbar-nav navitems">
+                                    <li class="nav-item">
+                                        <a class="nav-link activebar" asp-action="index" asp-controller="Home">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " asp-action="aboutus" asp-controller="Home">About Us</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-action="index" asp-controller="shop">Shop</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-action="index" asp-controller="Blog">Blog</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-action="contact" asp-controller="Home">Contact</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-action="faqs" asp-controller="Home">FAQ’s</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    @RenderBody()
+
+    <!-- Quick view modal start -->
+    <div class="modal" id="quick_view">
+        <div class="modal-dialog modal-lg modal-dialog-centered prmodal">
+
+        </div>
+    </div>
+    <!-- Quick view modal end -->
+    <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered cartmodal" role="document">
+            <div class="modal-content cart-block">
+                <div class="modal-header border-bottom-0">
+                    <h5 style="padding-left:35%" class="modal-title" id="exampleModalLabel">
+                        Your Shopping Cart
+                    </h5>
+
+                </div>
+                <div class="modal-body">
+                    <table class="table table-image">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Count</th>
+                                <th scope="col">Total</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in basket.Products)
+                            {
+                                <tr>
+                                    <td class="w-25">
+                                        <img src="~/uploads/products/@item.Product.ProductImages.FirstOrDefault(x=>x.PosterStatus==true)?.Image" class="img-fluid img-thumbnail" alt="Sheep">
+                                    </td>
+                                    <td>@item.Product.Name</td>
+                                    <td>@((item.Product.DiscountPercent>0?(item.Product.SalePrice*(1-item.Product.DiscountPercent/100)):item.Product.SalePrice).ToString("0.00"))</td>
+                                    <td class="qty"><input type="text" class="form-control" id="input1" value="@item.Count"></td>
+                                    <td>@((((item.Product.DiscountPercent > 0 ? (item.Product.SalePrice * (1 - item.Product.DiscountPercent / 100)) : item.Product.SalePrice)) * @item.Count).ToString("0.00"))</td>
+
+                                    <td>
+                                        <a asp-action="removebasket" asp-controller="shop" asp-route-id="@item.Product.Id" class="btn btn-danger btn-sm remove-to-cart">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                        <h5>Total: <span class="price text-success">@basket.TotalPrice.ToString("0.00")</span></h5>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 d-flex justify-content-between cart-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    @if (basket.Products.Count != 0)
+                    {
+                        <button type="button" class="btn btn-success"><a style="color:white" asp-action="cart" asp-controller="shop">Cart</a></button>
+
+                    }
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footersection">
+            <div class="footerhead">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="footerbrandname">
+                                <h3>
+                                    @settings["footername"]
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="footersocial">
+                                <ul class="social">
+                                    <li><a href=" @settings["facebookurl"]"><i class="fa fa-facebook-square"></i></a></li>
+                                    <li><a href=" @settings["twitterurl"]"><i class="fa fa-twitter-square"></i></a></li>
+                                    <li><a href=" @settings["linkedinurl"]"><i class="fa fa-linkedin-square"></i></a></li>
+                                    <li><a href=" @settings["googleurl"]"><i class="fa fa-google-plus-square"></i></a></li>
+                                    <li><a href=" @settings["githuburl"]"><i class="fa fa-github-square"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footercontent">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="footerinfo">
+                                <h6>
+                                    ADD: <span> @settings["addres"]</span>
+                                </h6>
+                                <h6>
+                                    TEL: <span>
+                                        @settings["tel"]
+                                    </span>
+                                </h6>
+                                <h6>MAIL: <span>@settings["mail"]</span></h6>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <ul class="footerhelper">
+                                <h5>Categories</h5>
+                                @foreach (var item in categories)
+                                {
+                                    <li><a asp-action="index" asp-controller="shop" asp-route-categoryId="@item.Id">@item.Name</a></li>
+                                }
+
+                            </ul>
+                        </div>
+                        <div class="col-lg-3">
+                            <ul class="footerhelper">
+                                <h5>Information</h5>
+                                <li><a asp-action="index" asp-controller="home">Home</a></li>
+                                <li><a asp-action="aboutus" asp-controller="home" >About Us</a></li>
+                                <li><a asp-action="index" asp-controller="shop">Shop</a></li>
+                                <li><a asp-action="index" asp-controller="blog">Blog</a></li>
+                                <li><a asp-action="contact" asp-controller="home">Contact</a></li>
+                                <li><a asp-action="faqs" asp-controller="home">Faqs</a></li>
+
+                            </ul>
+                        </div>
+                        <div class="col-lg-3">
+                            
+                            <ul class="footerhelper">
+                                <h5>Brands</h5>
+                                @foreach (var item in brands)
+                                {
+                                    <li><a asp-action="index" asp-controller="shop" asp-route-brandId="@item.Id">@item.Name</a></li>
+
+                                }
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="copyright" style="border-top: 1px solid #666; text-align: center;">
+                            <p style="padding-top: 10px; color: #666;">© 2021 LEEBROSUS – ALL RIGHTS RESERVED</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/9891d92c98.js" crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+        let removeBtn = document.querySelector(".fa-times");
+        let inputSearch = document.getElementById("input-search");
+        inputSearch.addEventListener("keyup", function () {
+            let search = inputSearch.value.trim();
+            removeBtn.classList.remove("d-none");
+            if (search == "") {
+                removeBtn.classList.add("d-none");
+            }
+            let searchList = document.getElementById("searchList");
+            searchList.innerHTML = "";
+            let formdata = new FormData();
+            formdata.append("search", search);
+            if (search.length > 0) {
+                axios.post('/Search/Search', formdata)
+                    .then(function (response) {
+                        // console.log(response.data)
+                        searchList.innerHTML = response.data;
+                    })
+                    .catch(function (error) {
+                        if (error.response) {
+                            let errorObj = error.response.data;
+                            for (let errors in errorObj) {
+                                let error = errorObj[errors];
+                                console.log(error);
+                            }
+                        }
+                    });
+            }
+        })
+
+        removeBtn.addEventListener("click", function () {
+            searchList.innerHTML = "";
+            inputSearch.value = "";
+            removeBtn.classList.add("d-none");
+        })</script>
+
+
+
+
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+        (function ($) {
+
+            // Products Slick
+            $('.products-slick').each(function () {
+                var $this = $(this),
+                    $nav = $this.attr('data-nav');
+
+                $this.slick({
+                    slidesToShow: 4,
+                    slidesToScroll: 2,
+                    autoplay: true,
+                    infinite: true,
+                    speed: 300,
+                    dots: true,
+                    arrows: true,
+                    appendArrows: $nav ? $nav : false,
+                    responsive: [{
+                        breakpoint: 991,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1,
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                        }
+                    },
+                    ]
+                });
+            });
+
+
+
+
+        })(jQuery);
+
+    $('.product-items').slick({
+        dots: false,
+        infinite: false,
+        speed: 300,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    infinite: true,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+
+        ]
+    });
+    </script>
+    <script>
+        $('.product-items').slick({
+            dots: false,
+            infinite: false,
+            speed: 300,
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                        infinite: true,
+                        dots: true
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+
+            ]
+        });
+    </script>
+    <script>
+
+        $('.info-slider').slick();
+    </script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="~/assets/js/script.js"></script>
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+﻿@model Blog
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1>Edit</h1>
+            <form asp-action="edit" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label asp-for="Title">SubTitle</label>
+                    <input class="form-control" asp-for="Title" placeholder="Enter Title">
+                    <span class="text-danger" asp-validation-for="Title"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Desc">Description</label>
+                    <input class="form-control" asp-for="Desc" placeholder="Enter Description">
+                    <span class="text-danger" asp-validation-for="Desc"></span>
+                </div>
+              
+                <div class="form-group">
+                    <label asp-for="Date">Date</label>
+                    <input class="form-control" asp-for="Date" placeholder="Enter BtnUrl">
+                    <span class="text-danger" asp-validation-for="Date"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="ImageFile">ImageFile</label>
+                    <input class="form-control" asp-for="ImageFile" placeholder="Select image">
+                    <span class="text-danger" asp-validation-for="ImageFile"></span>
+                    @if (Model.ImageUrl != null)
+                    {
+                        <div class="img-box" style="position:relative;display:inline-block">
+                            <i class="fas fa-times remove-img-box" style="position: absolute;right: -5px;top: -8px; color: red; cursor: pointer;"></i>
+                            <input type="hidden" name="Image" value="@Model.ImageUrl" />
+                            <img width="250" src="~/uploads/blogs/@Model.ImageUrl" />
+                        </div>
+                    }
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+    $(document).ready(function () {
+        $(document).on("click", ".remove-img-box", function () {
+            $(this).parent().remove()
+        })
+    })
+    </script>
+}

@@ -1,0 +1,95 @@
+﻿@model List<Faqs>
+
+<main>
+    <!-- breadcrumb area start -->
+    <div style="padding: 20px;" class="breadcrumb-area bg-img" data-bg="assets/img/banner/breadcrumb-banner.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-wrap text-center">
+                        <nav aria-label="breadcrumb">
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a style="color: rgb(241 48 48);" asp-action="index" asp-controller="home">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Faq's</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb area end -->
+    <div class="header-faqs mt-5" style="text-align: center;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="title-faqs">
+                        <h5>FREQUENTLY ASKED QUESTIONS</h5>
+                    </div>
+                    <div class="title-date-faqs">
+                        <span>
+                            Last Updated on February 02, 2015
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="faqs-accordion">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+
+
+                    @foreach (var item in Model)
+                    {
+                        <button class="accordion">@item.AccTitle</button>
+                        <div class="panel">
+                            <p>@item.AccDesc</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="contact-section mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="contact-div" style="text-align: center;">
+                        <h2>STILL HAVE QUESTIONS? CONTACT US</h2>
+                        <a asp-action="contact" asp-controller="Home">CONTACT</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</main>
+
+@section Scripts{ 
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+
+                this.classList.toggle("activeacc");
+
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }</script>
+} 

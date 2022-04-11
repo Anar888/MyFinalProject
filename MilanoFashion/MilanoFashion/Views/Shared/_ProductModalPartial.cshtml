@@ -1,0 +1,96 @@
+﻿
+
+@model Product
+
+
+
+
+
+<div class="modal-content">
+    <div style="padding:6px" class="modal-header">
+        <a href="#" style="font-size: 30px; padding: 4px 15px; background-color: white; color: black;"  class="close " data-dismiss="modal" aria-label="close">&times;</a>
+
+    </div>
+    <div class="modal-body">
+        <!-- product details inner end -->
+        <div class="product-details-inner">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="product-large-slider mb-20">
+                        <div class="pro-large-img img-zoom">
+                            <img style="width: 100%;padding-top:100px" src="~/uploads/products/@Model.ProductImages.FirstOrDefault(x=>x.PosterStatus==true)?.Image" alt="product thumb" />
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="product-details-des">
+                        <h3 class="pro-det-title">@Model.Name</h3>
+                        <div class="pro-review">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <span class="good"><i class="fa @(Model.Rate>=i?"fa-star":"")"></i></span>
+
+                            }
+                            Reviews(@Model.ProductComments.Count)
+                        </div>
+                        <div class="price-box">
+                            @if (Model.DiscountPercent > 0)
+                            {
+
+                                <span class="regular-price">$@((Model.SalePrice * (1- Model.DiscountPercent/100)).ToString("0.00"))</span>
+                                <span class="old-price"><del>$@Model.SalePrice</del></span>
+                            }
+                            else
+                            {
+                                <span class="regular-price">$@Model.SalePrice</span>
+
+                            }
+                        </div>
+                        <p class="descrption">@Model.Desc</p>
+                        <div class="sizes">
+                            <h4>Sizes:</h4>
+                            <ul class="choice-ul">
+                                @foreach (var item in Model.ProductSizes)
+                                {
+                                    <li>@item.Size.Name</li>
+
+                                }
+
+                            </ul>
+                        </div>
+                        <div class="availability mb-20">
+                            <h5 class="cat-title">Colors:</h5>
+                            <select name="cars" id="cars">
+                                @foreach (var item in Model.ProductColors)
+                                {
+
+                                    <option value="@item.Color.Name">@item.Color.Name</option>
+
+                                }
+
+                            </select>
+
+                           
+
+                        </div>
+                        <div class="availability ">
+                            <h5 class="cat-title">Availability:</h5>
+                            <span> @(Model.IsAvailable? "In Stock":"Out of Stock")</span>
+                        </div>
+                        <div class="quantity-cart-box d-flex align-items-center mb-20">
+                          <div class="quantity">
+                                            <div class="pro-qty"><input disabled type="text" value="1"></div>
+                                        </div>
+                            <a  asp-action="addbasket" asp-controller="shop" asp-route-id="@Model.Id" class="btn btn-default addcart add-to-cart">Add To Cart</a>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- product details inner end -->
+    </div>
+</div>

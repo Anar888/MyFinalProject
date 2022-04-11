@@ -1,0 +1,25 @@
+﻿
+
+@model BrandLogo
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1>Create</h1>
+            <form asp-action="create" method="post" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <label asp-for="ImageFile">Imageurl</label>
+                    <input class="form-control" asp-for="ImageFile" placeholder="Enter ImageUrl">
+                    <span class="text-danger" asp-validation-for="ImageFile"></span>
+                </div>
+
+
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

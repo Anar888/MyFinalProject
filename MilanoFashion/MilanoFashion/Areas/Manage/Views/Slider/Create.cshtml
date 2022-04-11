@@ -1,0 +1,36 @@
+﻿
+
+@model Slider
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1>Create</h1>
+            <form asp-action="create" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+
+                    <label asp-for="Title">Title</label>
+                    <input class="form-control" asp-for="Title" placeholder="Enter Title">
+                    <span class="text-danger" asp-validation-for="Title"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description">Description</label>
+                    <input class="form-control" asp-for="Description" placeholder="Enter Description">
+                    <span class="text-danger" asp-validation-for="Description"></span>
+                </div>
+              
+                <div class="form-group">
+                    <label asp-for="ImageFile">Image</label>
+                    <input class="form-control" asp-for="ImageFile" placeholder="Enter BackImage">
+                    <span class="text-danger" asp-validation-for="ImageFile"></span>
+                </div>
+               
+               
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+﻿@model BasketViewModel
+
+<a style=" color: #ff5555 !important; " asp-action="wishlist" asp-controller="shop">
+    <i class="far fa-heart"></i>
+</a>
+<a style=" color: #ff5555 !important; " href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+    <sup>@Model.Products.Count</sup>
+</a>
+
+<div class="dropdown-menu " id="drpmenu" aria-labelledby="dropdownMenuLink">
+    <div class="modal-content">
+        <div class="modal-header border-bottom-0">
+            <h5 class="modal-title" id="exampleModalLabel">
+                Your Shopping Cart
+            </h5>
+           
+        </div>
+        <div class="modal-body">
+            <table class="table table-image">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Count</th>
+                        <th scope="col">Total</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Products)
+                    {
+                        <tr>
+                            <td class="w-25">
+                                <img src="~/uploads/products/@item.Product.ProductImages.FirstOrDefault(x=>x.PosterStatus==true)?.Image" class="img-fluid img-thumbnail" alt="Sheep">
+                            </td>
+                            <td>@item.Product.Name</td>
+                            <td>@((item.Product.DiscountPercent>0?(item.Product.SalePrice*(1-item.Product.DiscountPercent/100)):item.Product.SalePrice).ToString("0.00"))</td>
+                            <td class="qty"><input type="text" class="form-control" id="input1" value="@item.Count"></td>
+                            <td>@((((item.Product.DiscountPercent > 0 ? (item.Product.SalePrice * (1 - item.Product.DiscountPercent / 100)) : item.Product.SalePrice)) * @item.Count).ToString("0.00"))</td>
+
+                            <td>
+                                <a asp-action="removebasket" asp-controller="shop" asp-route-id="@item.Product.Id" class="btn btn-danger btn-sm remove-to-cart">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-end">
+                <h5>Total: <span class="price text-success">@Model.TotalPrice.ToString("0.00")</span></h5>
+            </div>
+        </div>
+        <div class="modal-footer border-top-0 d-flex justify-content-between cart-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            @if (Model.Products.Count != 0)
+            {
+                <button type="button" class="btn btn-success"><a style="color:white" asp-action="cart" asp-controller="shop">Cart</a></button>
+
+            }
+        </div>
+</div>

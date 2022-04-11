@@ -1,0 +1,92 @@
+﻿@model List<Blog>
+<main>
+    <div style="padding: 20px;" class="breadcrumb-area bg-img" data-bg="assets/img/banner/breadcrumb-banner.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-wrap text-center">
+                        <nav aria-label="breadcrumb">
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a asp-action="index" asp-controller="home">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page" asp-action="index" asp-controller="blog" >Blog</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="section lb">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                    <div class="widget">
+                        <h2 class="widget-title">Recent Posts</h2>
+                        <div class="blog-list-widget">
+                            <div class="list-group">
+                                @foreach (var item in Model)
+                                {
+                                    <a asp-action="detail" asp-route-id="@item.Id" class="list-group-item list-group-item-action flex-column align-items-start">
+                                        <div class="w-100 justify-content-between">
+                                            <div class="row">
+
+                                                <div class="col-lg-12">
+                                                    <h5 style="color: black " class="mb-1 titlewidget">@item.Title</h5>
+                                                    <small>@item.Date</small>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </a>
+
+                                }
+
+                            </div>
+                        </div><!-- end blog-list -->
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                    <div class="page-wrapper">
+                        <div class="blog-custom-build">
+                            @foreach (var item in Model)
+                            {
+                                <div class="blog-box wow fadeIn">
+                                    <div class="post-media">
+                                        <a asp-action="detail" asp-route-id="@item.Id" title="">
+                                            <img src="~/uploads/blogs/@item.ImageUrl" alt="" class="img-fluid">
+                                            <div class="hovereffect">
+                                                <span></span>
+                                            </div>
+                                            <!-- end hover -->
+                                        </a>
+                                    </div>
+                                    <!-- end media -->
+                                    <div class="blog-meta big-meta text-center">
+                                        <div class="post-sharing">
+
+                                        </div><!-- end post-sharing -->
+                                        <h4><a asp-action="detail" asp-route-id="@item.Id" title="">@item.Title</a></h4>
+                                        <p>@item.Desc</p>
+                                        <small><a  title="">@item.Date</a></small>
+                                  
+                                    </div><!-- end meta -->
+                                </div>
+
+                                <hr class="invis">
+                            }
+
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <!-- end sidebar -->
+            </div><!-- end col -->
+        </div><!-- end row -->
+        </div><!-- end container -->
+    </section>
+</main>

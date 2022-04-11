@@ -1,0 +1,101 @@
+﻿@model BasketViewModel
+
+
+<main>
+    <div style="padding: 20px;" class="breadcrumb-area bg-img" data-bg="assets/img/banner/breadcrumb-banner.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-wrap text-center">
+                        <nav aria-label="breadcrumb">
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item "><a style="color: rgb(241 48 48);" asp-action="index" asp-controller="home">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Cart</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-main-wrapper section-padding">
+        <div class="container">
+            @if (Model.Products.Count != 0)
+            {
+                <div class="section-bg-color">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!-- Cart Table Area -->
+                            <div class="cart-table table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="pro-thumbnail">Thumbnail</th>
+                                            <th class="pro-title">Product</th>
+                                            <th class="pro-price">Price</th>
+                                            <th class="pro-quantity">Quantity</th>
+                                            <th class="pro-subtotal">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Products)
+                                        {
+                                            <tr>
+                                                <td class="pro-thumbnail"><a><img class="img-fluid" src="~/uploads/products/@item.Product.ProductImages.FirstOrDefault(x => x.PosterStatus == true)?.Image" alt="Product" /></a></td>
+                                                <td class="pro-title"><a asp-action="detail" asp-route-id="@item.Product.Id">@item.Product.Name</a></td>
+                                                <td class="pro-price"><span>@((item.Product.DiscountPercent > 0 ? (item.Product.SalePrice * (1 - item.Product.DiscountPercent / 100)) : item.Product.SalePrice).ToString("0.00"))</span></td>
+                                                <td class="pro-quantity">
+                                                    <div class="pro-qty"><input type="text" disabled id="input1" value="@item.Count"></div>
+                                                </td>
+                                                <td class="pro-subtotal"><span>$@((((item.Product.DiscountPercent > 0 ? (item.Product.SalePrice * (1 - item.Product.DiscountPercent / 100)) : item.Product.SalePrice)) * @item.Count).ToString("0.00"))</span></td>
+
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Cart Update Option -->
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!-- Cart Calculation Area -->
+                            <div class="cart-calculator-wrapper">
+                                <div class="cart-calculate-items">
+                                    <h3>Cart Totals</h3>
+                                    <div class="table-responsive">
+                                        <table class="table">
+
+                                            <tr class="total">
+                                                <td>Total</td>
+                                                <td class="total-amount">$@Model.TotalPrice.ToString("0.00")</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <a asp-action="checkout" asp-controller="order" class="btn d-block">Proceed Checkout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-lg-8">
+
+                            <p>This list is empty.</p>
+                            <div class="form-actions">
+                                <a style="color:grey;border-bottom:1px solid grey" asp-action="index" asp-controller="home">Back to Homepage</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</main>

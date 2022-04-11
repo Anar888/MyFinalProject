@@ -1,0 +1,42 @@
+﻿
+@model WishlistViewModel
+
+
+@if (Model.Products.Count!=0)
+{
+    <thead>
+        <tr>
+            <th class="pro-thumbnail">Thumbnail</th>
+            <th class="pro-title">Product</th>
+            <th class="pro-subtotal">Price</th>
+            <th class="pro-remove">Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td class="pro-thumbnail"><a ><img class="img-fluid" src="~/uploads/products/@item.Product.ProductImages.FirstOrDefault(x => x.PosterStatus == true)?.Image" alt="Product" /></a></td>
+                <td class="pro-title"><a asp-action="detail" asp-route-id="@item.Product.Id">@item.Product.Name</a></td>
+                <td class="pro-price"><span>@((item.Product.DiscountPercent > 0 ? (item.Product.SalePrice * (1 - item.Product.DiscountPercent / 100)) : item.Product.SalePrice).ToString("0.00"))</span></td>
+
+                <td class="pro-remove"><a asp-action="removewishlist" asp-controller="shop" asp-route-id="@item.Product.Id" class=" remove-to-wishlist"><i class="fa fa-trash-o"></i></a></td>
+            </tr>
+
+        }
+    </tbody>
+}
+else
+	{
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-lg-8">
+           
+            <p>This list is empty.</p>
+            <div class="form-actions">
+                <a asp-action="index" asp-controller="home" >Back to Homepage</a>
+            </div>
+        </div>
+    </div>
+</div>
+	}

@@ -1,0 +1,63 @@
+﻿@model Order
+
+<div class="col-lg-6">
+    <div class="checkout-billing-details-wrap">
+
+        <h4 class="checkout-title">Billing Details</h4>
+        <div class="billing-form-wrap">
+            <form id="order-form" asp-action="create" asp-controller="order" method="post">
+
+                <div class="single-input-item">
+                    <label asp-for="FullName" class="required">Fullname</label>
+                    <input asp-for="FullName" type="text" id="email" placeholder="Fullname" required />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+                <div class="single-input-item">
+                    <label asp-for="Email" class="required">Email Address</label>
+                    <input asp-for="Email" type="email" id="email" placeholder="Email Address" required />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+
+                <div class="single-input-item">
+                    <label asp-for="Country" class="required">Country</label>
+                    <input asp-for="Country" type="text" id="email" placeholder="Country" required />
+                    <span asp-validation-for="Country" class="text-danger"></span>
+
+                </div>
+
+                <div class="single-input-item">
+                    <label asp-for="City" class="required mt-20">City</label>
+                    <input asp-for="City" type="text" id="street-address" placeholder="City" required />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+                <div class="single-input-item">
+                    <label asp-for="Address" class="required mt-20">Address</label>
+                    <input asp-for="Address" type="text" id="street-address" placeholder="Address" required />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+
+
+                <div class="single-input-item">
+                    <label asp-for="PhoneNumber">Phone</label>
+                    <input asp-for="PhoneNumber" type="text" id="phone" placeholder="Phone" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+                </div>
+
+
+
+
+                <div class="single-input-item">
+                    <label asp-for="Note">Order Note</label>
+                    <textarea asp-for="Note" name="ordernote" id="ordernote" cols="30" rows="3" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                    <span asp-validation-for="Note" class="text-danger"></span>
+
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>

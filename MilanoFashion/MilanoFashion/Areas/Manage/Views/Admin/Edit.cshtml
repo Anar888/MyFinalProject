@@ -1,0 +1,39 @@
+﻿@model SuperUpdateViewModel
+
+<div class="container">
+    <h1>Edit</h1>
+    <div class="row">
+        <form asp-action="edit" method="post">
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <label asp-for="FullName">FullName</label>
+                    <input type="text" class="form-control" asp-for="FullName" placeholder="Enter FullName">
+                    <span asp-validation-for="FullName"></span>
+                </div>
+                <div class="form-group col-lg-6">
+                    <label asp-for="Username">UserName</label>
+                    <input type="text" class="form-control" asp-for="Username" readonly placeholder="Enter UserName">
+                    <span asp-validation-for="Username"></span>
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                <div class="form-group col-lg-4">
+                    <label asp-for="Email">Email</label>
+                    <input type="text" class="form-control" asp-for="Email" placeholder="Enter Email">
+                    <span asp-validation-for="Email"></span>
+                </div>
+                <div class="form-group col-lg-4">
+                    <label asp-for="Password">Password</label>
+                    <input asp-for="Password" type="text" class="form-control" placeholder="Enter New Password">
+                    <span asp-validation-for="Password"></span>
+                </div>
+            </div>
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,29 @@
+﻿@model Banner
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1>Delete</h1>
+            <form asp-action="delete" method="post">
+                <div class="form-group">
+                    
+                   
+                        <div class="img-box" style="position:relative;display:inline-block">
+                            <input type="hidden" name="BackImage" value="@Model.ImageUrl" />
+                            <img width="250" src="~/uploads/banners/@Model.ImageUrl" />
+                        </div>
+                    
+                </div>
+                <button type="submit" id="butdelet" class="btn btn-danger">Delete</button>
+
+            </form>
+
+        </div>
+        <div class="col-lg-4 mx-auto">
+            <a asp-action="index" class="btn btn-primary">Go to List</a>
+        </div>
+    </div>
+</div>

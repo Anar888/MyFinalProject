@@ -1,0 +1,109 @@
+.cart-table>.table {
+    margin: 0;
+}
+    .cart-table .table thead {
+      background-color: #ff5555; }
+      .cart-table .table thead tr th {
+        border-color: grey;
+        border-bottom: 0 solid transparent;
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 15px 20px;
+        text-align: center;
+        text-transform: uppercase; }
+    .cart-table .table tbody tr td {
+      border-color: grey;
+      text-align: center;
+      padding: 10px 20px;
+      color: #333333; }
+      .cart-table .table tbody tr td a {
+        color: #333333;
+        font-weight: 500;
+        text-transform: capitalize; }
+        .cart-table .table tbody tr td a:hover {
+          color: #ff5555; }
+        .cart-table .table tbody tr td a.btn {
+          color:white; }
+          .cart-table .table tbody tr td a.btn:hover {
+            color: white; }
+        .cart-table .table tbody tr td a.check-btn {
+          color: white; }
+    .cart-table .table tr .pro-thumbnail,
+    .cart-table .table tr .pro-price,
+    .cart-table .table tr .pro-quantity,
+    .cart-table .table tr .pro-subtotal,
+    .cart-table .table tr .pro-remove {
+      width: 140px; }
+    .cart-table .table tr .pro-qty {
+      width: 62px;
+      height: 35px;
+      border: 1px solid black;
+      padding: 0 15px;
+      float: left; }
+      .cart-table .table tr .pro-qty .qtybtn {
+        width: 15px;
+        display: block;
+        float: left;
+        line-height: 38px;
+        cursor: pointer;
+        text-align: center;
+        font-size: 22px;
+        font-weight: 400;
+        color: #666666; }
+      .cart-table .table tr .pro-qty input {
+        width: 28px;
+        float: left;
+        border: none;
+        height: 34px;
+        line-height: 34px;
+        padding: 0;
+        text-align: center;
+        background-color: transparent; }
+  
+ 
+  
+.cart-calculator-wrapper {
+    margin-top: 30px;
+    background-color: #f8f8f8; }
+    .cart-calculator-wrapper h3 {
+      color: #333333;
+      font-size: 18px;
+      font-weight: 500;
+      padding: 27px 15px 25px;
+      margin-bottom: 0; }
+    .cart-calculator-wrapper .cart-calculate-items {
+      font-weight: 500; }
+      .cart-calculator-wrapper .cart-calculate-items .table {
+        margin-bottom: 0; }
+        .cart-calculator-wrapper .cart-calculate-items .table tr td {
+          color: #333333;
+          padding: 15px 20px; }
+          .cart-calculator-wrapper .cart-calculate-items .table tr td:nth-child(2) {
+            color: #333333;
+            text-align: right; }
+          .cart-calculator-wrapper .cart-calculate-items .table tr td.total-amount {
+            color: #ff5555;
+            font-weight: 700; }
+    .cart-calculator-wrapper a {
+      border-radius: 0;
+      text-align: center;
+    color: white; 
+border: 1px solid;
+border-radius: 10px;
+background-color: #ff5555;}
+.btn:hover{
+    border: #ff5555 1px solid;
+    color: white;
+}
+
+.cart-footer > .btn-success {
+    color: #fff;
+    background-color: #ff5555 ;
+    border-color: #ff5555 ;
+    border-radius:22px;
+}
+
+
+
+

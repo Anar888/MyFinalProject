@@ -1,0 +1,81 @@
+﻿@model CheckOutViewModel
+<main>
+    <!-- breadcrumb area start -->
+    <div class="breadcrumb-area bg-img" data-bg="assets/img/banner/breadcrumb-banner.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-wrap text-center">
+                        <nav aria-label="breadcrumb">
+                            <h1 class="breadcrumb-title">Checkout</h1>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a asp-action="index" asp-controller="Home">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb area end -->
+    <!-- checkout main wrapper start -->
+    <div class="checkout-page-wrapper section-padding">
+        <div class="container">
+
+            <div class="row">
+                <!-- Checkout Billing Details -->
+                @Html.Partial("_CheckoutFormPartial", Model.Order)
+
+                <!-- Order Summary Details -->
+                <div class="col-lg-6">
+                    <div class="order-summary-details">
+                        <h4 class="checkout-title">Your Order Summary</h4>
+                        <div class="order-summary-content">
+                            <!-- Order Summary Table -->
+                            <div class="order-summary-table table-responsive text-center">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+
+                                            <th>Products</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Basket.Products)
+                                        {
+                            <tr>
+                                <td>
+                                    <a href="product-details.html">@item.Product.Name <strong> × @item.Count</strong></a>
+                                </td>
+                                <td>$@((item.Product.DiscountPercent>0? (item.Product.SalePrice*(1-item.Product.DiscountPercent/100))*item.Count :item.Product.SalePrice*item.Count).ToString("0.00"))</td>
+                            </tr>}
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td>Sub Total</td>
+                                            <td><strong>$@Model.Basket.TotalPrice.ToString("0.00")</strong></td>
+                                        </tr>
+
+
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <!-- Order Payment Method -->
+                            <div class="order-payment-method">
+
+                                <div class="summary-footer-area">
+                                  
+                                    <button type="submit" form="order-form" class=" check-btn">Place Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- checkout main wrapper end -->
+</main>

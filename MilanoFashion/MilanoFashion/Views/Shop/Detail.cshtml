@@ -1,0 +1,266 @@
+﻿
+@model ProductDetailViewModel
+
+<main>
+    <!-- breadcrumb area start -->
+    <div style="padding: 20px;" class="breadcrumb-area bg-img" data-bg="assets/img/banner/breadcrumb-banner.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-wrap text-center">
+                        <nav aria-label="breadcrumb">
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a asp-action="index" asp-controller="home">Home</a></li>
+                                <li class="breadcrumb-item"><a asp-action="index" asp-controller="shop">Shop</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Product Details</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb area end -->
+    <!-- product details wrapper start -->
+    <div class="product-details-wrapper section-padding">
+        <div class="container custom-container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- product details inner end -->
+                    <div class="product-details-inner">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="product-large-slider mb-20">
+                                    @*<div class="pro-large-img img-zoom">
+                                        <img style="width: 100%;" src="~/uploads/products/@Model.Product.ProductImages.FirstOrDefault(x=>x.PosterStatus==true)?.Image">
+
+                                    </div>*@
+                                    <div id="carouselExampleControls" style="padding-top:100px" class="carousel slide" data-ride="carousel">
+
+                                        <div class="carousel-inner karusel">
+                                            <div class="carousel-item active">
+                                                <img class="d-block w-100" src="~/uploads/products/@Model.Product.ProductImages.FirstOrDefault(x=>x.PosterStatus==true)?.Image" alt="First slide">
+                                            </div>
+
+                                            @foreach (var item in Model.Product.ProductImages.Where(x=>x.PosterStatus==null))
+                                            {
+                                                <div class="carousel-item">
+                                                    <img class="d-block w-100" src="~/uploads/products/@item.Image" alt="Second slide">
+                                                </div>
+                                            }
+                                        </div>
+                                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="product-details-des">
+                                    <h3 class="pro-det-title">@Model.Product.Name</h3>
+                                    <div class="pro-review">
+                                        <span>
+                                            <a style="font-size: 15px;" >
+                                                <div class="product-review">
+                                                    @for (int i = 1; i <= 5; i++)
+                                                    {
+                                                        <span class="good"><i class="fa @(Model.Product.Rate>=i?"fa-star":"")"></i></span>
+
+                                                    }
+                                                    Reviews(@Model.Product.ProductComments.Count)
+
+                                                </div>
+                                            </a>
+                                        </span>
+                                        <p>@Model.Product.Desc</p>
+                                        <div class="sizes">
+                                            <h4>Size</h4>
+                                            <ul class="choice-ul">
+                                                @foreach (var item in Model.Product.ProductSizes)
+                                                {
+                                                    <li>@item.Size.Name</li>
+
+                                                }
+
+                                            </ul>
+                                        </div>
+                                        <div class="colors">
+                                            <h4>Color</h4>
+
+                                            <ul class="color-list">
+                                                @foreach (var item in Model.Product.ProductColors)
+                                                {
+                                                    <li>
+                                                        <div class="form-check formdv">
+                                                            <input  class="form-check-input" name="brandId" type="radio" value="@item.Color.Name"  />
+                                                            <label class="form-check-label">@item.Color.Name</label>
+                                                        </div>
+                                                    </li>
+                                                }
+
+
+                                            </ul>
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class="product-info mb-20">
+                                        <div class="availability ">
+                                            <h5 class="cat-title">Availability:</h5>
+                                            <span> @(Model.Product.IsAvailable? "In Stock":"Out of Stock")</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="price-box">
+                                        @if (Model.Product.DiscountPercent > 0)
+                                        {
+
+                                            <span class="regular-price">$@((Model.Product.SalePrice * (1- Model.Product.DiscountPercent/100)).ToString("0.00"))</span>
+                                            <span class="old-price"><del>$@Model.Product.SalePrice</del></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="regular-price">$@Model.Product.SalePrice</span>
+
+                                        }
+                                    </div>
+
+                                   
+
+                                    <div class="quantity-cart-box d-flex align-items-center mb-20">
+                                        <div class="quantity">
+                                            <div class="pro-qty"><input disabled type="text" value="1"></div>
+                                        </div>
+                                        <a  asp-action="addbasket" asp-controller="shop" asp-route-id="@Model.Product.Id" class="btn btn-default addcart add-to-cart">Add To Cart</a>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- product details inner end -->
+                    <!-- product details reviews start -->
+                    <div class="product-details-reviews section-padding">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="product-review-info">
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Description</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Reviews</button>
+                                            </li>
+
+                                        </ul>
+                                        <div class="tab-content" id="myTabContent">
+                                            <div style="padding: 20px; border: 1px solid grey;" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                                <h3>Specification</h3>
+                                                <p>@Model.Product.Desc</p>
+                                            </div>
+                                            <div style="padding: 20px; border: 1px solid grey;" class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                                <div class="total-reviews">
+                                                    @foreach (var item in Model.Product.ProductComments)
+                                                    {
+                                                        <div class="user-rewiew">
+                                                            <div class="row">
+                                                             
+                                                                <div class="col-lg-12">
+                                                                    <h5>@item.AppUser.UserName</h5>
+                                                                    <div class="pro-review">
+                                                                        <span>
+                                                                            <a style="font-size: 15px;" >
+                                                                                <div class="product-review">
+                                                                                    @for (int i = 1; i <= item.Rate; i++)
+                                                                                    {
+                                                                                        <span class="good"><i class="fa fa-star"></i></span>
+
+                                                                                    }
+
+                                                                                    
+
+                                                                                </div>
+                                                                            </a>
+                                                                        </span>
+                                                                        <p>@item.Text</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    }
+                                                </div>
+                                                <div class="tab-pane fade active show" id="tab_three">
+                                                    @Html.Partial("_ProductCommentFormPartial", Model.Comment)
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- product details reviews end -->
+                    <!-- featured product area start -->
+                    <section style="padding: 20px 0px;" id="featured">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h4 class="related-title">Related Products</h4>
+                                </div>
+                            </div>
+                            <div style="display: flex;" class="product-items">
+                                @foreach (var item in Model.RelatedProducts)
+                                {
+                                    <div class="product-grid">
+                                        <div class="product-image">
+                                            <a asp-action="detail" asp-route-id="@item.Id" class="image ">
+                                                <img style="height:270px" src="~/uploads/products/@item.ProductImages.FirstOrDefault(x=>x.PosterStatus==true)?.Image">
+                                            </a>
+
+                                            <ul class="product-links">
+                                                <li><a data-toggle="modal" data-target="#quick_view" asp-action="getproduct" asp-controller="shop" asp-route-id="@item.Id" class="open-product-modal"><i class="fa fa-search"></i></a></li>
+                                                <li><a class="add-to-cart" asp-action="addbasket" asp-controller="shop" asp-route-id="@item.Id"><i class="fa fa-shopping-basket"></i></a></li>
+                                                <li><a class="add-to-wishlist" asp-action="addwishlist" asp-controller="shop" asp-route-id="@item.Id"><i class="far fa-heart"></i></a></li>
+                                            </ul>
+
+                                        </div>
+                                        <div class="product-content">
+                                            <h3 class="title"><a asp-action="detail" asp-route-id="@item.Id">@item.Name</a></h3>
+                                            @if (item.DiscountPercent > 0)
+                                            {
+
+                                                <span class="regular-price">$@((item.SalePrice * (1- item.DiscountPercent/100)).ToString("0.00"))</span>
+                                                <span class="old-price"><del>$@item.SalePrice</del></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="regular-price">$@item.SalePrice</span>
+
+                                            }
+                                        </div>
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+                    </section>
+                    <!-- featured product area end -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- product details wrapper end -->
+</main>

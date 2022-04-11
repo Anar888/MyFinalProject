@@ -1,0 +1,25 @@
+﻿@model Faqs
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1>Edit</h1>
+            <form asp-action="edit" method="post">
+                <div class="form-group">
+                    <label asp-for="AccTitle">AccTitle</label>
+                    <input class="form-control" asp-for="AccTitle" placeholder="Enter AccTitle">
+                    <span class="text-danger" asp-validation-for="AccTitle"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AccDesc">AccDesc</label>
+                    <input class="form-control" asp-for="AccDesc" placeholder="Enter AccDesc">
+                    <span class="text-danger" asp-validation-for="AccDesc"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

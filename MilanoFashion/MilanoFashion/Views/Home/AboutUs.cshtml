@@ -1,0 +1,82 @@
+﻿@model AboutViewModel
+
+
+<main>
+    <section class="ourstory mb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-wrap text-center">
+                        <nav aria-label="breadcrumb">
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a style="color: rgb(241 48 48);" asp-action="index" asp-controller="home">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">About Us</li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="ourstory-title">
+                        <h6>@Model.Abouts["abouttitle"]</h6>
+                    </div>
+                    <div class="ourstory-content mt-5">
+                        <p>@Model.Abouts["aboutdesc"]</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ourstory-image">
+                        <img src="~/uploads/abouts/@Model.Abouts["aboutimage"]" alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="crazy-team mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="crazy-title">
+                        <h5 style="text-align: center;">
+                            CRAZY TEAM
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                @foreach (var item in Model.Teams)
+                {
+                    <div class="col-lg-3">
+                        <div class="teammember">
+                            <div class="teammember-image">
+                                <img style="width: 213px;height: 202px;" src="~/uploads/teams/@item.Image" alt="">
+                            </div>
+                            <div class="teammember-content mt-3">
+                                <div class="teammember-name">
+                                    <h6>@item.Name</h6>
+                                </div>
+                                <div class="teammember-position">
+                                    <span>@item.Position</span>
+                                </div>
+
+                                <ul class="teammember-links">
+                                    <li><a href="@item.Fburl"><i class="fab fa-facebook"></i></a></li>
+                                    <li><a href="@item.Twiturl"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="@item.Youtubeurl"><i class="fab fa-youtube"></i></a></li>
+                                    <li><a href="@item.Googleurl"><i class="fab fa-google"></i></a></li>
+
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+
+    </section>
+</main>

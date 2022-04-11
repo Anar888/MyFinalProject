@@ -1,0 +1,41 @@
+﻿
+
+@model FoundersInfoSlider
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1>Create</h1>
+            <form asp-action="create" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+
+                    <label asp-for="Name">Name</label>
+                    <input class="form-control" asp-for="Name" placeholder="Enter Name">
+                    <span class="text-danger" asp-validation-for="Name"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Bio">Bio</label>
+                    <input class="form-control" asp-for="Bio" placeholder="Enter Bio">
+                    <span class="text-danger" asp-validation-for="Bio"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Position">Position</label>
+                    <input class="form-control" asp-for="Position" placeholder="Enter Position">
+                    <span class="text-danger" asp-validation-for="Position"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ImageFile">Image</label>
+                    <input class="form-control" asp-for="ImageFile" placeholder="Enter BackImage">
+                    <span class="text-danger" asp-validation-for="ImageFile"></span>
+                </div>
+
+
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,91 @@
+.title-faqs > h5 {
+    font-size: 25px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: #333;
+}
+
+.title-date-faqs > span {
+    color: #f55;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 1.4px;
+}
+
+.contact-div {
+    border: 1px solid;
+    padding: 40px;
+}
+
+    .contact-div > h2 {
+        color: #333;
+        font-size: 25px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2.5px;
+        padding-bottom: 20px;
+    }
+
+    .contact-div > a {
+        background-color: #f55;
+        padding: 15px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .6px;
+        color: white;
+        border-radius: 10px;
+        transition: background-color 0.5s ease;
+    }
+
+        .contact-div > a:hover {
+            background-color: rgb(241, 135, 135);
+        }
+
+.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 18px;
+}
+
+    .activeacc, .accordion:hover {
+        background-color: rgb(241, 135, 135);
+    }
+
+
+.panel {
+    padding: 10px 30px;
+    background-color: white;
+    display: none;
+    overflow: hidden;
+    border: 1px solid;
+    border-color: #dddddd;
+}
+
+    .panel > p {
+        color: #444444;
+        font-size: 14px;
+    }
+
+.accordion:after {
+    content: '\02795';
+    font-size: 13px;
+    color: #777;
+    float: right;
+    margin-left: 5px;
+}
+
+.activeacc:after {
+    content: "\2796";
+}

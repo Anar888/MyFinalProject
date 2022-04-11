@@ -1,0 +1,51 @@
+﻿@model AdminRegisterViewModel
+
+<main>
+
+    <!-- Sign Up Start -->
+    <div class="container-fluid">
+        <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+            <div class="col-lg-12">
+                <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                    <form  asp-action="create" method="post">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <a  class="">
+                                <h3 class="text-primary">CREATE ADMIN</h3>
+                            </a>
+                            
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="UserName" type="text" required class="form-control" id="floatingText">
+                            <label asp-for="UserName">Username</label>
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="FullName" type="text" required class="form-control" id="floatingText">
+                            <label asp-for="FullName">FullName</label>
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-4">
+                            <input asp-for="Email" type="text" required class="form-control" id="floatingText">
+                            <label asp-for="Email">Email</label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-4">
+                            <input asp-for="Password" type="text" required class="form-control" id="floatingText">
+                            <label asp-for="Password">Password</label>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-4">
+                            <input asp-for="ConfirmPassword" type="text" required class="form-control" id="floatingText">
+                            <label asp-for="ConfirmPassword">ConfirmPassword</label>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Register</button>
+                    </form>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Sign Up End -->
+</main>

@@ -1,0 +1,36 @@
+.contactinput {
+    margin-bottom: 20px;
+    width: 100%;
+    border: 1px solid grey;
+    height: 42px;
+    padding-left: 5px;
+}
+.contacttextarea {
+    width: 100%;
+    padding-left: 5px;
+}
+.contactbtn{
+    background-color:#ff3f44;
+    padding: 10px;
+    width: 20px;
+    padding: 9px;
+    width: 120px;
+    border-radius: 10px;
+    color: white;
+    border: none;
+    transition: all 0.4s ease;
+}
+.contactbtn:hover{
+    background-color:#f85056 ;
+}
+.adresbar>li{
+    padding: 15px;
+}
+.adresbar>li>span{
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 25px;
+    letter-spacing: .9px;
+}

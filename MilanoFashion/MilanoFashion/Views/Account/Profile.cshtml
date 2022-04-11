@@ -1,0 +1,170 @@
+﻿@model MemberProfileViewModel
+@{
+    int orderCounter = 0;
+    int orderItemCounter = 0;
+}
+<main>
+    <div style="padding: 20px;" class="breadcrumb-area bg-img" data-bg="assets/img/banner/breadcrumb-banner.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-wrap text-center">
+                        <nav aria-label="breadcrumb">
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">My Account</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="tab">
+                    <button class="tablinks"  onclick="openTab(event, 'Orders')"><i class="fas fa-shopping-cart"></i> Orders</button>
+                    <button class="tablinks" id="defaultOpen" onclick="openTab(event, 'Account Details')"><i class="fas fa-user"></i> Account Details</button>
+                    <a asp-action="logout" asp-controller="account">
+
+                        <button  type="submit" class="tablinks"><i class="fas fa-sign-out-alt"></i>  Logout</button>
+
+
+
+
+                    </a>
+                </div>
+
+
+            </div>
+            <div class="col-lg-9">
+
+                <div id="Orders" class="tabcontent ">
+                    <h3 class="accheader">Orders</h3>
+
+                    @if (Model.Orders.Count!=0)
+                    {
+                        <table class="profiletable">
+                            <tr>
+                                <th></th>
+                                <th>Order</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Total</th>
+                            </tr>
+                            @foreach (var item in Model.Orders)
+                            {
+                                orderItemCounter = 0;
+                                orderCounter++;
+                                <tr data-toggle="collapse" data-target="#demo-@item.Id" class="accordion-toggle">
+                                    <td>@orderCounter</td>
+                                    <td>@item.OrderItems.Count</td>
+                                    <td>@item.CreatedAt.ToString("dd-MM-yyyy HH:mm")</td>
+                                    <td>@item.Status</td>
+                                    <td>$@item.TotalPrice</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="12" class="hiddenRow">
+                                        <div class="accordian-body collapse" id="demo-@item.Id">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr class="info">
+                                                        <th></th>
+                                                        <th>Product Name</th>
+                                                        <th>Count</th>
+                                                        <th>Unit price</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+
+                                                    @foreach (var orderItem in item.OrderItems)
+                                                    {
+                                                        orderItemCounter++;
+                                                        <tr data-toggle="collapse" class="accordion-toggle" data-target="#demo10">
+                                                            <td>@orderItemCounter</td>
+                                                            <td>@orderItem.Product.Name</td>
+                                                            <td>@orderItem.Count </td>
+                                                            <td>@orderItem.DiscountedPrice</td>
+                                                        </tr>
+                                                    }
+
+
+
+
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+
+
+
+
+                        </table>
+                    }
+                    else
+                    {
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-lg-8">
+
+                            <p>This list is empty.</p>
+                            <div class="form-actions">
+                                <a style="color:red" asp-action="index" asp-controller="home">Back to Homepage</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    }
+
+                </div>
+
+                <div id="Account Details" class="tabcontent">
+                    <div class="account-details-form">
+                        @Html.Partial("_MemberUpdatePartialVIew", Model.Member)
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+</main>
+
+<script>
+    document.getElementById("defaultOpen").click();
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
